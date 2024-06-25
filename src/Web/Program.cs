@@ -28,16 +28,18 @@ if (builder.Environment.IsDevelopment() || builder.Environment.EnvironmentName =
 }
 else{
     // Configure SQL Server (prod)
-    var credential = new ChainedTokenCredential(new AzureDeveloperCliCredential(), new DefaultAzureCredential());
-    builder.Configuration.AddAzureKeyVault(new Uri(builder.Configuration["AZURE_KEY_VAULT_ENDPOINT"] ?? ""), credential);
+    // var credential = new ChainedTokenCredential(new AzureDeveloperCliCredential(), new DefaultAzureCredential());
+    // builder.Configuration.AddAzureKeyVault(new Uri(builder.Configuration["AZURE_KEY_VAULT_ENDPOINT"] ?? ""), credential);
     builder.Services.AddDbContext<CatalogContext>(c =>
     {
-        var connectionString = builder.Configuration[builder.Configuration["AZURE_SQL_CATALOG_CONNECTION_STRING_KEY"] ?? ""];
+        // var connectionString = builder.Configuration[builder.Configuration["AZURE_SQL_CATALOG_CONNECTION_STRING_KEY"] ?? ""];
+        var connectionString = builder.Configuration.GetConnectionString("CatalogConnection");
         c.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
     });
     builder.Services.AddDbContext<AppIdentityDbContext>(options =>
     {
-        var connectionString = builder.Configuration[builder.Configuration["AZURE_SQL_IDENTITY_CONNECTION_STRING_KEY"] ?? ""];
+        // var connectionString = builder.Configuration[builder.Configuration["AZURE_SQL_IDENTITY_CONNECTION_STRING_KEY"] ?? ""];
+        var connectionString = builder.Configuration.GetConnectionString("IdentityConnection");
         options.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
     });
 }
@@ -166,7 +168,7 @@ app.UseHealthChecks("/health",
             await context.Response.WriteAsync(result);
         }
     });
-if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docker")
+// if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docker")
 {
     app.Logger.LogInformation("Adding Development middleware...");
     app.UseDeveloperExceptionPage();
@@ -174,12 +176,12 @@ if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docke
     app.UseMigrationsEndPoint();
     app.UseWebAssemblyDebugging();
 }
-else
-{
-    app.Logger.LogInformation("Adding non-Development middleware...");
-    app.UseExceptionHandler("/Error");
-    app.UseHsts();
-}
+// else
+// {
+//     app.Logger.LogInformation("Adding non-Development middleware...");
+//     app.UseExceptionHandler("/Error");
+//     app.UseHsts();
+// }
 
 app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();
