@@ -18,6 +18,14 @@
 x64/
 x86/
 bld/
+pubBash/
+pubCors/
+webBash/
+apiPub/
+webPub/
+api.zip
+web.zip
+pubCors.zip
 [Bb]in/
 [Oo]bj/
 [Ll]og/

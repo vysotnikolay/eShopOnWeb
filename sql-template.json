@@ -1,0 +1,126 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "servers_e_shop_on_web_catalog_sql_server_name": {
+            "defaultValue": "e-shop-on-web-catalog-sql-server",
+            "type": "String"
+        },
+        "servers_e_shop_on_web_identity_sql_server_name": {
+            "defaultValue": "e-shop-on-web-identity-sql-server",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Sql/servers",
+            "apiVersion": "2023-08-01-preview",
+            "name": "[parameters('servers_e_shop_on_web_catalog_sql_server_name')]",
+            "location": "centralus",
+            "kind": "v12.0",
+            "properties": {
+                "administratorLogin": "sqlAdmin",
+                "administratorLoginPassword": "sq1AdminPassword",
+                "version": "12.0",
+                "minimalTlsVersion": "1.2",
+                "publicNetworkAccess": "Enabled",
+                "restrictOutboundNetworkAccess": "Disabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers",
+            "apiVersion": "2023-08-01-preview",
+            "name": "[parameters('servers_e_shop_on_web_identity_sql_server_name')]",
+            "location": "centralus",
+            "kind": "v12.0",
+            "properties": {
+                "administratorLogin": "sqlAdmin",
+                "administratorLoginPassword": "sq1AdminPassword",
+                "version": "12.0",
+                "minimalTlsVersion": "1.2",
+                "publicNetworkAccess": "Enabled",
+                "restrictOutboundNetworkAccess": "Disabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases",
+            "apiVersion": "2023-08-01-preview",
+            "name": "[concat(parameters('servers_e_shop_on_web_catalog_sql_server_name'), '/catalogDatabase')]",
+            "location": "centralus",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_e_shop_on_web_catalog_sql_server_name'))]"
+            ],
+            "sku": {
+                "name": "Basic",
+                "tier": "Basic",
+                "capacity": 5
+            },
+            "kind": "v12.0,user",
+            "properties": {
+                "collation": "SQL_Latin1_General_CP1_CI_AS",
+                "maxSizeBytes": 2147483648,
+                "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+                "zoneRedundant": false,
+                "readScale": "Disabled",
+                "requestedBackupStorageRedundancy": "Local",
+                "maintenanceConfigurationId": "/subscriptions/fba10ea4-b415-4eb5-90b2-3632af759e24/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+                "isLedgerOn": false,
+                "availabilityZone": "NoPreference"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases",
+            "apiVersion": "2023-08-01-preview",
+            "name": "[concat(parameters('servers_e_shop_on_web_identity_sql_server_name'), '/identityDatabase')]",
+            "location": "centralus",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_e_shop_on_web_identity_sql_server_name'))]"
+            ],
+            "sku": {
+                "name": "GP_S_Gen5",
+                "tier": "GeneralPurpose",
+                "family": "Gen5",
+                "capacity": 1
+            },
+            "kind": "v12.0,user,vcore,serverless",
+            "properties": {
+                "collation": "SQL_Latin1_General_CP1_CI_AS",
+                "maxSizeBytes": 34359738368,
+                "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+                "zoneRedundant": false,
+                "readScale": "Disabled",
+                "autoPauseDelay": 60,
+                "requestedBackupStorageRedundancy": "Local",
+                "minCapacity": 0.5,
+                "maintenanceConfigurationId": "/subscriptions/fba10ea4-b415-4eb5-90b2-3632af759e24/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+                "isLedgerOn": false,
+                "availabilityZone": "NoPreference"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/firewallRules",
+            "apiVersion": "2023-08-01-preview",
+            "name": "[concat(parameters('servers_e_shop_on_web_identity_sql_server_name'), '/AppService')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_e_shop_on_web_identity_sql_server_name'))]"
+            ],
+            "properties": {
+                "startIpAddress": "0.0.0.1",
+                "endIpAddress": "255.255.255.254"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/firewallRules",
+            "apiVersion": "2023-08-01-preview",
+            "name": "[concat(parameters('servers_e_shop_on_web_catalog_sql_server_name'), '/service')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_e_shop_on_web_catalog_sql_server_name'))]"
+            ],
+            "properties": {
+                "startIpAddress": "0.0.0.1",
+                "endIpAddress": "255.255.255.254"
+            }
+        }
+    ]
+}
