@@ -1,0 +1,1 @@
+az deployment group create -n myTemplate -g CloudX -f template.json --verbose
