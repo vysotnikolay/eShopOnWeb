@@ -20,6 +20,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Logging.ApplicationInsights;
 using MinimalApi.Endpoint.Configurations.Extensions;
 using MinimalApi.Endpoint.Extensions;
 
@@ -83,6 +84,17 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
+
+
+builder.Services.AddApplicationInsightsTelemetry();
+builder.Logging.AddApplicationInsights(
+        configureTelemetryConfiguration: (config) => 
+            config.ConnectionString = "InstrumentationKey=f6ba43e8-b9a3-4b81-be75-8a0ba4fbe1e3;IngestionEndpoint=https://centralus-2.in.applicationinsights.azure.com/;LiveEndpoint=https://centralus.livediagnostics.monitor.azure.com/;ApplicationId=ea2df2b1-f999-4c89-a49d-402566e3f289",
+            configureApplicationInsightsLoggerOptions: (options) => { }
+    );
+builder.Logging.AddFilter<ApplicationInsightsLoggerProvider>("MyAppInsCategory", LogLevel.Trace);
+
+
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 builder.Configuration.AddEnvironmentVariables();
 
