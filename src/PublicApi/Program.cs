@@ -26,6 +26,8 @@ using MinimalApi.Endpoint.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+throw new System.Exception("-------------------- Cannot move further from Program.cs -----------------");
+
 builder.Services.AddEndpoints();
 
 // Use to force loading of appsettings.json of test project
@@ -89,7 +91,7 @@ builder.Services.AddControllers();
 builder.Services.AddApplicationInsightsTelemetry();
 builder.Logging.AddApplicationInsights(
         configureTelemetryConfiguration: (config) => 
-            config.ConnectionString = "InstrumentationKey=f6ba43e8-b9a3-4b81-be75-8a0ba4fbe1e3;IngestionEndpoint=https://centralus-2.in.applicationinsights.azure.com/;LiveEndpoint=https://centralus.livediagnostics.monitor.azure.com/;ApplicationId=ea2df2b1-f999-4c89-a49d-402566e3f289",
+            config.ConnectionString = "InstrumentationKey=41a05186-9f21-46e9-9c02-70708d451fee;IngestionEndpoint=https://centralus-2.in.applicationinsights.azure.com/;LiveEndpoint=https://centralus.livediagnostics.monitor.azure.com/;ApplicationId=3ea6156e-0517-40a1-a403-676d8d2ed361",
             configureApplicationInsightsLoggerOptions: (options) => { }
     );
 builder.Logging.AddFilter<ApplicationInsightsLoggerProvider>("MyAppInsCategory", LogLevel.Trace);
