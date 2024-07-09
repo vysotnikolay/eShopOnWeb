@@ -4,16 +4,19 @@ using System.Threading.Tasks;
 using BlazorShared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.eShopWeb.ApplicationCore.Exceptions;
+using Microsoft.ApplicationInsights;
 
 namespace Microsoft.eShopWeb.PublicApi.Middleware;
 
 public class ExceptionMiddleware
 {
     private readonly RequestDelegate _next;
+    private readonly TelemetryClient _telemetryClient;
 
-    public ExceptionMiddleware(RequestDelegate next)
+    public ExceptionMiddleware(RequestDelegate next, TelemetryClient telemetryClient)
     {
         _next = next;
+        _telemetryClient = telemetryClient;
     }
 
     public async Task InvokeAsync(HttpContext httpContext)
@@ -44,11 +47,13 @@ public class ExceptionMiddleware
         else
         {
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            await context.Response.WriteAsync(new ErrorDetails()
+            var error = new ErrorDetails()
             {
                 StatusCode = context.Response.StatusCode,
                 Message = exception.Message
-            }.ToString());
+            }.ToString();
+            _telemetryClient.TrackException(exception);
+            await context.Response.WriteAsync(error);
         }
     }
 }
