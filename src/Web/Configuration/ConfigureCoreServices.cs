@@ -4,6 +4,7 @@ using Microsoft.eShopWeb.Infrastructure.Data;
 using Microsoft.eShopWeb.Infrastructure.Data.Queries;
 using Microsoft.eShopWeb.Infrastructure.Logging;
 using Microsoft.eShopWeb.Infrastructure.Services;
+using Microsoft.eShopWeb.Infrastructure;
 
 namespace Microsoft.eShopWeb.Web.Configuration;
 
@@ -11,7 +12,8 @@ public static class ConfigureCoreServices
 {
     public static IServiceCollection AddCoreServices(this IServiceCollection services,
         IConfiguration configuration)
-    {
+    {   
+        services.AddTransient<IOrderItemsReserver, OrderItemsReserver>();
         services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
         services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 

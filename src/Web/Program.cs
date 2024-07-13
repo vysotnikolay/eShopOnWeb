@@ -22,11 +22,11 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.AddConsole();
 
-if (builder.Environment.IsDevelopment() || builder.Environment.EnvironmentName == "Docker"){
-    // Configure SQL Server (local)
-    Microsoft.eShopWeb.Infrastructure.Dependencies.ConfigureServices(builder.Configuration, builder.Services);
-}
-else{
+// if (builder.Environment.IsDevelopment() || builder.Environment.EnvironmentName == "Docker"){
+//     // Configure SQL Server (local)
+//     Microsoft.eShopWeb.Infrastructure.Dependencies.ConfigureServices(builder.Configuration, builder.Services);
+// }
+// else{
     // Configure SQL Server (prod)
     var credential = new ChainedTokenCredential(new AzureDeveloperCliCredential(), new DefaultAzureCredential());
     builder.Configuration.AddAzureKeyVault(new Uri(builder.Configuration["AZURE_KEY_VAULT_ENDPOINT"] ?? ""), credential);
@@ -40,7 +40,7 @@ else{
         var connectionString = builder.Configuration[builder.Configuration["AZURE_SQL_IDENTITY_CONNECTION_STRING_KEY"] ?? ""];
         options.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
     });
-}
+// }
 
 builder.Services.AddCookieSettings();
 
@@ -166,20 +166,20 @@ app.UseHealthChecks("/health",
             await context.Response.WriteAsync(result);
         }
     });
-if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docker")
-{
+// if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docker")
+// {
     app.Logger.LogInformation("Adding Development middleware...");
     app.UseDeveloperExceptionPage();
     app.UseShowAllServicesMiddleware();
     app.UseMigrationsEndPoint();
     app.UseWebAssemblyDebugging();
-}
-else
-{
-    app.Logger.LogInformation("Adding non-Development middleware...");
-    app.UseExceptionHandler("/Error");
-    app.UseHsts();
-}
+// }
+// else
+// {
+//     app.Logger.LogInformation("Adding non-Development middleware...");
+//     app.UseExceptionHandler("/Error");
+//     app.UseHsts();
+// }
 
 app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();

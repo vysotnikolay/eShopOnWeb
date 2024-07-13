@@ -8,6 +8,7 @@ using Microsoft.eShopWeb.ApplicationCore.Specifications;
 using Microsoft.eShopWeb.Web.Features.OrderDetails;
 using NSubstitute;
 using Xunit;
+using Microsoft.eShopWeb.Infrastructure;
 
 namespace Microsoft.eShopWeb.UnitTests.MediatorHandlers.OrdersTests;
 
@@ -17,6 +18,7 @@ public class GetOrderDetails
     
     public GetOrderDetails()
     {
+        
         var item = new OrderItem(new CatalogItemOrdered(1, "ProductName", "URI"), 10.00m, 10);
         var address = new Address("", "", "", "", "");
         Order order = new Order("buyerId", address, new List<OrderItem> { item });
@@ -35,5 +37,18 @@ public class GetOrderDetails
         var result = await handler.Handle(request, CancellationToken.None);
 
         Assert.NotNull(result);
+    }
+
+    [Fact]
+        public async Task MyServiceTest()
+    {
+        var reserver = new OrderItemsReserver();
+        var item = new OrderItem(new CatalogItemOrdered(1, "ProductName", "URI"), 10.00m, 10);
+        var address = new Address("", "", "", "", "");
+        Order order = new Order("buyerId", address, new List<OrderItem> { item });
+        var task = reserver.Reserve(order);
+        await task;
+        // Assert.NotNull(result);
+        // Assert.True(result.IsSuccessStatusCode);
     }
 }
