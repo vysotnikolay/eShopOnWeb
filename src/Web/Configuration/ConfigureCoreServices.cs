@@ -12,8 +12,9 @@ public static class ConfigureCoreServices
 {
     public static IServiceCollection AddCoreServices(this IServiceCollection services,
         IConfiguration configuration)
-    {   
-        services.AddTransient<IOrderItemsReserver, OrderItemsReserver>();
+    {
+        //services.AddTransient<IOrderItemsReserver, OrderItemsReserver>();
+        services.AddTransient<IOrderItemsReserver, SbOrderItemReserver>();
         services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
         services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
