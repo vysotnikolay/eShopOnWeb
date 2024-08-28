@@ -1,0 +1,17 @@
+0. создать logic app, эндпоинт в functionapp засунуть
+0.1. Создать ServiceBus
+0.2. Создать CosmosDb
+0.3. Создать BlobStarage
+1. создать AzFunctions и задеплоить их (один из них - isolated, другой - нет)
+2. добавить вызовы в код web-app:
+Зарегистрировать в ConfigureCoreServices и добавить в ctor D:\Kolia\eShopOnWeb\src\ApplicationCore\Services\OrderService.cs
+(Sbus-trigerred function) - SbOrderItemReserver, поменять ConnString + в Functions.Program BlobConnStr, Реализация в папке Task7Functions
+
+DeliveryOrderProcessor + CosmosDb - поменять ConnString, реализация в Task6Function (НЕ ISOLATED Hosting)
+
+3. старт build-and-deploy-script
+5. Создать ACR и задеплоить API image
+6. созать web-app для API с деплоем из ACR
+7. стартануть скрипты на добавление userов в базы данных
+8. проверить работоспособность всего
+9. сконфигурировать autoscaling для web
