@@ -16,17 +16,21 @@ public class OrderService : IOrderService
     private readonly IRepository<Basket> _basketRepository;
     private readonly IRepository<CatalogItem> _itemRepository;
     private readonly IOrderItemsReserver _orderItemsReserver;
+    private readonly IDeliveryOrderProcessor _deliveryProcessor;
+
     public OrderService(IRepository<Basket> basketRepository,
         IRepository<CatalogItem> itemRepository,
         IRepository<Order> orderRepository,
         IUriComposer uriComposer,
-        IOrderItemsReserver orderItemsReserver)
+        IOrderItemsReserver orderItemsReserver,
+        IDeliveryOrderProcessor deliveryProcessor)
     {
         _orderRepository = orderRepository;
         _uriComposer = uriComposer;
         _basketRepository = basketRepository;
         _itemRepository = itemRepository;
         _orderItemsReserver = orderItemsReserver;
+        _deliveryProcessor = deliveryProcessor;
     }
 
     public async Task CreateOrderAsync(int basketId, Address shippingAddress)
@@ -52,5 +56,6 @@ public class OrderService : IOrderService
 
         await _orderRepository.AddAsync(order);
         await _orderItemsReserver.Reserve(order);
+        await _deliveryProcessor.Deliver(order);
     }
 }

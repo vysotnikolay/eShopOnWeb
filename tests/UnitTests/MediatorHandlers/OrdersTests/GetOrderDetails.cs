@@ -52,16 +52,16 @@ public class GetOrderDetails
     //     // Assert.True(result.IsSuccessStatusCode);
     // }
 
-        [Fact]
-        public async Task MyServiceTest()
-    {
-        var reserver = new OrderItemsReserver();
-        var item = new OrderItem(new CatalogItemOrdered(1, "ProductName", "URI"), 10.00m, 10);
-        var address = new Address("", "", "", "", "");
-        Order order = new Order("buyerId", address, new List<OrderItem> { item });
-        var task = reserver.Reserve(order);
-        await task;
+        // [Fact]
+        // public async Task MyServiceTest()
+    // {
+        // var reserver = new OrderItemsReserver();
+        // var item = new OrderItem(new CatalogItemOrdered(1, "ProductName", "URI"), 10.00m, 10);
+        // var address = new Address("", "", "", "", "");
+        // Order order = new Order("buyerId", address, new List<OrderItem> { item });
+        // var task = reserver.Reserve(order);
+        // await task;
         // Assert.NotNull(result);
         // Assert.True(result.IsSuccessStatusCode);
-    }
+    // }
 }

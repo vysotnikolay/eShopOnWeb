@@ -1,13 +1,16 @@
 0. создать logic app, эндпоинт в functionapp засунуть
-0.1. Создать ServiceBus
-0.2. Создать CosmosDb
-0.3. Создать BlobStarage
-1. создать AzFunctions и задеплоить их (один из них - isolated, другой - нет)
-2. добавить вызовы в код web-app:
-Зарегистрировать в ConfigureCoreServices и добавить в ctor D:\Kolia\eShopOnWeb\src\ApplicationCore\Services\OrderService.cs
-(Sbus-trigerred function) - SbOrderItemReserver, поменять ConnString + в Functions.Program BlobConnStr, Реализация в папке Task7Functions
+0.1. Создать ServiceBus + Queue Orders
+0.2. Создать CosmosDb + db Orders + OrdersContainer
+0.3. Создать BlobStarage + container Orders
+1. создать AzFunctions и задеплоить их (один из них - isolated, другой - нет):
+HTTP Trigger DeliveryOrderProcessor - SaveOrderToCosmosDb
+SB Trigger - OrderItemsReserver - SbTriggeredFunction
 
-DeliveryOrderProcessor + CosmosDb - поменять ConnString, реализация в Task6Function (НЕ ISOLATED Hosting)
+Func: (Sbus-trigerred function) - SbOrderItemReserver, поменять ConnString + в Functions.Program BlobConnStr + SbConnString, Реализация в папке AzFunctions/OrderItemsReserver
+e-Shop: !!! SbOrderItemReserver: сменить ServiceBusConnectionString
+
+Func: DeliveryOrderProcessor + CosmosDb - поменять ConnString, реализация в Task6Function (ISOLATED Hosting)
+!!! e-shop: DeliveryOrderProcessor: сменить FunctionApp connectionString
 
 3. старт build-and-deploy-script
 5. Создать ACR и задеплоить API image

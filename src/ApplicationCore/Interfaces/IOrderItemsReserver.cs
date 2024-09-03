@@ -8,3 +8,8 @@ public interface IOrderItemsReserver
 {
     Task Reserve(Order order);
 }
+
+public interface IDeliveryOrderProcessor
+{
+    Task Deliver(Order order);
+}
