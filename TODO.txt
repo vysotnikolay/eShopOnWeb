@@ -1,7 +1,7 @@
 0. создать logic app, эндпоинт в functionapp засунуть
-0.1. Создать ServiceBus + Queue Orders
-0.2. Создать CosmosDb + db Orders + OrdersContainer
-0.3. Создать BlobStarage + container Orders
+0.1. Создать ServiceBus + Queue Orders - connectionString: Endpoint=sb://e-shop-on-web-sbus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=jmwe628C6XmVOzodxeGTPDOmjaXroLtTP+ASbKrYz+A=
+0.2. Создать CosmosDb + db Orders + OrdersContainer connectionString: AccountEndpoint=https://e-shop-on-web-cosmos-db-account.documents.azure.com:443/;AccountKey=mGuderDSGnDLSiKEzKsVZdc18YAqzyyOQRGAdAGUIJQ4CeEITmEM6mszyOS9fv6OM5DcomUtyRVqACDbFugm6g==;
+0.3. Создать BlobStarage + container Orders connectionString: DefaultEndpointsProtocol=https;AccountName=eshoponwebstorageaccount;AccountKey=Z6GFAt1PYZyL7JSwws6SNrQMCp+8tBmx2cMzl879RsZSFcxwjpGMAYoDp99sYjUbC8nQFbuvNpB3+AStpJKI1w==;EndpointSuffix=core.windows.net
 1. создать AzFunctions и задеплоить их (один из них - isolated, другой - нет):
 HTTP Trigger DeliveryOrderProcessor - SaveOrderToCosmosDb
 SB Trigger - OrderItemsReserver - SbTriggeredFunction

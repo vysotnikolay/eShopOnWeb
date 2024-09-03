@@ -13,7 +13,7 @@ namespace Microsoft.eShopWeb.Infrastructure;
 public class DeliveryOrderProcessor : IDeliveryOrderProcessor
 {
     // TODO: add function URL
-    private string _url="https://e-shop-on-web-functions.azurewebsites.net/api/SaveOrderToCosmosDb?code=kSnBqqhq5cNvtyOdbIHjGu1cCTKgsIWBSV-YAZ7RykDsAzFuXOsRBw%3D%3D";
+    private string _url="https://e-shop-on-web-functions1.azurewebsites.net/api/SaveOrderToCosmosDb?code=09S3Q2Jrs7Ucji-tmpqMZoZlbDnRSdVdnHxmd3XpFQaTAzFumZvUQw%3D%3D";
     private IAppLogger<SbOrderItemReserver> _logger;
 
     public DeliveryOrderProcessor(IAppLogger<SbOrderItemReserver> logger)

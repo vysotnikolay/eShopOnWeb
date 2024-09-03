@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
@@ -39,7 +39,7 @@ namespace EshopOnWebTask6Function
 
     public class MultiResponse
     {
-        [CosmosDBOutput("Orders", "OrdersContainer", Connection = "CosmosDbConnectionSetting", CreateIfNotExists = false)]
+        [CosmosDBOutput("OrdersDb", "OrdersContainer", Connection = "CosmosDbConnectionSetting", CreateIfNotExists = false)]
         public Order Order { get; set; }
         
         public IActionResult ActionResult { get; set; }

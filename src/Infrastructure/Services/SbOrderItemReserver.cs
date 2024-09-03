@@ -14,7 +14,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Services;
 public class SbOrderItemReserver : IOrderItemsReserver
 {
     // TODO: ChangeConnection sring
-    const string ServiceBusConnectionString = "Endpoint=sb://order-sb-namespace.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=NI75+z7CvlyNCe5jre0F1cRuOOynMq90Z+ASbI47t4Q=";
+    const string ServiceBusConnectionString = "Endpoint=sb://e-shop-on-web-sbus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=jmwe628C6XmVOzodxeGTPDOmjaXroLtTP+ASbKrYz+A=";
     const string QueueName = "Orders";
     private IAppLogger<SbOrderItemReserver> logger;
     public SbOrderItemReserver(IAppLogger<SbOrderItemReserver> logger)

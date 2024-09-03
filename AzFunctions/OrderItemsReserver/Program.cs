@@ -19,7 +19,7 @@ var host = new HostBuilder()
             if (connString == null)
             {
 				// TODO: Change BlobConnStr
-                connString = "DefaultEndpointsProtocol=https;AccountName=task7storage;AccountKey=oV1RYjyVl+Zw2BPICQQu9eXC14wQ9UoYOM0Z6Xd4+grwQ/qI2dxoN30KD48ulw/bPyhc0in1dac5+AStdxQtAA==;EndpointSuffix=core.windows.net";
+                connString = "DefaultEndpointsProtocol=https;AccountName=eshoponwebstorageaccount;AccountKey=Z6GFAt1PYZyL7JSwws6SNrQMCp+8tBmx2cMzl879RsZSFcxwjpGMAYoDp99sYjUbC8nQFbuvNpB3+AStpJKI1w==;EndpointSuffix=core.windows.net";
             }
             return new BlobServiceClient(connString);
         });
